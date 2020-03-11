@@ -1,4 +1,13 @@
-# vue-mysql
+<!--
+ * @作者: Edwin Yeung
+ * @Date: 2020-02-18 13:38:59
+ * @修改人: Edwin Yeung
+ * @LastEditTime: 2020-03-11 18:08:21
+ * @描述: 
+ -->
+## 第一次用 Git 代码 托管
+## vue-mysql
+
 
 > A Vue.js project
 
