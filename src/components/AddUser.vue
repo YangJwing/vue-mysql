@@ -1,20 +1,26 @@
 <template>
-  <div id="add-blog container">
+  <div id="add-user container">
     <h2>添加用户</h2>
     <form>
-      <label>用户姓名</label>
-      <input type="text" v-model="userName" class="form-control" required placeholder="请输入姓名" />
-      <label for>年龄</label>
-      <input type="text" v-model="age" required placeholder="请输入年龄" />
+      <div class="input-item">
+        <label>用户姓名</label>
+        <input type="text" v-model="userName" class="form-control9" required placeholder="请输入姓名" />
+      </div>
+      <div class="input-item">
+        <label for>年龄</label>
+        <input type="text" v-model="age" class="form-control9" required placeholder="请输入年龄" />
+      </div>
 
-      <button v-on:click.prevent="addUser">添加用户</button>
-      <button v-on:click.prevent="searchUser">查看用户</button>
-      <button v-on:click.prevent="editUser">编辑用户</button>
-      <button v-on:click.prevent="deleteUser">删除用户</button>
+      <div class="btn">
+        <button v-on:click.prevent="addUser">添加用户</button>
+        <button v-on:click.prevent="searchUser">查看用户</button>
+        <button v-on:click.prevent="editUser">编辑用户</button>
+        <button v-on:click.prevent="deleteUser">删除用户</button>
+      </div>
     </form>
 
     <div>
-      <h3 v-if="submited">您的用户增加成功</h3>
+      <h3 v-if="submited">用户增加成功</h3>
     </div>
 
     <div id="preview" v-if="kk_idoyou">
@@ -48,7 +54,7 @@
 export default {
   // http://jsonplaceholder.typicode.com/
   // http://jsonplaceholder.typicode.com/posts
-  name: "add-blog",
+  name: "add-user",
   data() {
     return {
       userName: "",
@@ -136,52 +142,39 @@ export default {
         .then(response => {
           console.log("荣提示：这是PUT ", response);
           console.log("荣query:", response.query);
-          this.users=[{name:this.userName,age:this.age},]
+          this.users = [{ name: this.userName, age: this.age }];
         });
     }
   }
-
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#add-blog * {
+#user * {
   box-sizing: border-box;
 }
-#add-blog {
+#user {
   margin: 20px auto;
   max-width: 600px;
   padding: 20px;
 }
-label {
-  display: inline-block;
-  margin: 20px 0 10px;
-}
-input[type="text"],
-textarea,
-select {
-  display: block;
+input[type="text"] {
+  /* display: block; */
+  /* border-radius:5px; */
+  height: 35px;
   width: 100%;
-  padding: 10px;
-  margin: 10px;
-}
-textarea {
-  height: 200px;
+  margin: 10px 10px 10px 10px;
 }
 
-#checkboxes label {
-  display: inline-block;
-  margin: 0;
+.btn {
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
-#checkboxes input {
-  display: inline-block;
-  margin-right: 10px;
-}
+
 button {
-  /* display: block; */
-  display: inline-block;
-  /* margin: 15px 15px; */
+  margin: 15px 3px;
   background: rgb(54, 143, 155);
   color: #fff;
   border: 0;
@@ -204,4 +197,19 @@ li {
   /* display: inline-block; */
 }
 
+label {
+  /* display: inline-block; */
+  margin: 20px 0 10px;
+  text-align: right;
+  /* padding:5px 0 5px; */
+  line-height: 20px;
+  /* background-color: rgb(168, 143, 143); */
+  width:100px;
+}
+
+.input-item{
+  display: flex;
+  flex:1;
+  align-items:baseline;
+}
 </style>

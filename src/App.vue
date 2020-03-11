@@ -1,21 +1,25 @@
+<!--
+ * @作者: Edwin Yeung
+ * @Date: 2020-02-14 23:16:25
+ * @修改人: Edwin Yeung
+ * @LastEditTime: 2020-03-12 00:06:39
+ * @描述: 
+ -->
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <!-- <HelloWorld/> -->
-    <!-- <test msg="这是新的属性值"></test> -->
-    <add-blog></add-blog>
+
+    <!-- <add-blog></add-blog> -->
+    <add-user></add-user>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld'
-import AddBlog from './components/AddBlog'
+import AddUser from './components/AddUser'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
-    AddBlog
+    AddUser
   }
 }
 </script>
