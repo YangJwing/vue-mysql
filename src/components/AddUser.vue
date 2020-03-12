@@ -23,12 +23,6 @@
       <h3 v-if="submited">用户增加成功</h3>
     </div>
 
-    <div id="preview" v-if="kk_idoyou">
-      <h3>用户信息</h3>
-      <p>姓名：{{userName}}</p>
-      <p>年龄：{{age}}</p>
-    </div>
-
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -62,7 +56,6 @@ export default {
       submited: false,
       message: "",
       users: [],
-      kk_idoyou: false
     };
   },
   methods: {
@@ -103,22 +96,18 @@ export default {
           params: { name: "%" + name + "%" }
         })
         .then(response => {
-          // console.log("荣提示：", response);
           this.users = response.body;
-          // cosolog.log('用户数据:',this.users)
         });
     },
 
     //删除用户 荣 on 2020.2.27
     deleteUser() {
       var name = this.userName;
-      // var age = this.age;
       console.log(name);
       this.$http
         .delete("/api/user/deleteUser", { body: { name: name } })
         .then(response => {
           console.log("荣提示：这是Delete ", response);
-          // this.message = response;
         });
     },
 
@@ -160,8 +149,6 @@ export default {
   padding: 20px;
 }
 input[type="text"] {
-  /* display: block; */
-  /* border-radius:5px; */
   height: 35px;
   width: 100%;
   margin: 10px 10px 10px 10px;
@@ -184,11 +171,6 @@ button {
   cursor: pointer;
 }
 
-#preview {
-  padding: 10px 20px;
-  border: 1px dotted #ccc;
-  margin: 30px 0;
-}
 h3 {
   margin-top: 10px;
 }
