@@ -64,8 +64,7 @@ export default {
       var age = this.age;
       console.log(name + ":" + age);
       this.$http
-        //这里的 addUser 是路由，传送到 userApi.js 接口，以下
-        //  的 searchUser 和 editUser 类似
+        //这里的 addUser 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
         .post(
           "/api/user/addUser",
           {
@@ -75,7 +74,6 @@ export default {
           {}
         )
         .then(response => {
-          // console.log(response)
           console.log("成功提示：", response);
           this.message = this.userName + ":" + this.age;
           this.userName = "";

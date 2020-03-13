@@ -39,6 +39,25 @@ router.post('/addUser', (req, res) => {
   })
 })
 
+//后端密码校验
+router.post('/logincheck',(req,res)=>{
+  var sql=$sql.login.logincheck
+  var params=req.body
+  console.log('sql :', sql);
+  console.log('params :', params);
+  conn.query(sql, [params.mobile, params.password], (err, result) => {
+    if (err) {
+      console.log("提示：" + err);
+    }
+    if (result.length) {
+      // res.json({status:1,msg:"登录成功"})
+      jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
+    } else {
+      res.json({status:1,msg:"登录失败"})
+    }
+  })
+})
+
 // 查询用户接口，荣自己加入的 2020.2.26测试通过 ***************
 router.get('/searchUser', (req, res) => {
   var sql = $sql.user.search   //sql 相当于 sqlMaps.js下的 user(对象):search（属性） 语句： select * from user where name=?
@@ -87,7 +106,6 @@ router.delete('/deleteUser', (req, res) => {
     }
   })
 })
-
 
 router.post('/cancelReader', (req, res) => {
   var sql = $sql.reader.delete
