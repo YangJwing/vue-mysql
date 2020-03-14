@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:23:30
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-13 16:40:05
+ * @LastEditTime: 2020-03-15 03:13:46
  * @描述: https://segmentfault.com/a/1190000015201803
  *        https://github.com/doterlin/vue-example-login
  *        https://blog.csdn.net/weixin_41105030/article/details/89333208  
@@ -37,8 +37,7 @@ export default {
     return {
       mobile: "",
       password: "",
-      msg: "",
-      islogin: false
+      msg: ""
     };
   },
   methods: {
@@ -57,9 +56,10 @@ export default {
 
     //密码校验
     logincheck() {
-      var mobile = this.mobile;
-      var password = this.password;
-      console.log("mobile :", mobile);
+      let mobile = this.mobile;
+      let password = this.password;
+      let logdata = {};
+
       this.$http
         .post(
           "/api/user/logincheck",
@@ -68,25 +68,46 @@ export default {
         )
         .then(response => {
           //判断用户名和密码是否正确
-          if (!response.body.msg) { //成功
-            //islogin设为true
-            this.islogin = true;
+          if (!response.body.msg) {
+            //成功
+            //state的islogin设为true
+            this.$store.commit("SET_LOGIN", true);
+
             //设置TOKEN 和 localstorage
-            this.$store.commit("SET_TOKEN", response.body);
+            this.$store.commit("SET_TOKEN", response.body[0]);
             console.log("this.state.token:", this.$store.state.token);
+
+            //获得用户名
+            this.$store.commit("GET_USER", response.body[0].name);
+            // console.log('user :', this.$store.state.user);
+
+            logdata.name = response.body[0].name;
+            logdata.mobile = response.body[0].mobile;
+            logdata.state = "成功";
+
+            //跳转到主页
             this.$router.push("/home");
             console.log("提示：", response);
-
-          } else {  //失败
+          } else {
+            //失败
             this.$store.commit("LOGOUT");
+            logdata.mobile=this.mobile
+            logdata.state ='失败'
+            console.log('response.body :', response.body);
+            alert(response.body.msg)
             console.log("this.state.token:", this.$store.state.token);
           }
+          //记录登录日志
+          this.$http.post("/api/user/loginlog",logdata)
+          .then(response=>{
+          })
+
         })
         .catch(err => {
           console.log("错误:", err);
-        });
+          alert("错误代码: " + err.status + ", 错误信息:" + err.statusText);
+        })
     }
-    
   }
 };
 </script>

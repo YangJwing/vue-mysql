@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:27:32
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-12 23:43:42
+ * @LastEditTime: 2020-03-14 10:34:49
  * @描述: 
  */
 
@@ -21,7 +21,7 @@ const Login = () => import('../components/Login')
  const routes=[
      {
         path:'',
-        redirect:"/login"
+        redirect:"/home"
     },
     {
         path:'/home',
@@ -44,8 +44,10 @@ const router=new VueRouter({
 //注册全局钩子用来拦截导航
 router.beforeEach((to,from,next)=>{
     const token=store.state.token
+    const user=store.state.user
     if (to.meta.requireAuth){  // 判断该路由是否需要登录权限
-        if (token) {           // 通过vuex state获取当前的token是否存在
+        // if (token) {           // 通过vuex state获取当前的token是否存在
+        if (user) {           // 通过vuex state获取当前的user是否存在
             next()
         } else {
             console.log('该页面需要登录!');

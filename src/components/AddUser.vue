@@ -3,12 +3,28 @@
     <h2>添加用户</h2>
     <form>
       <div class="input-item">
-        <label>用户姓名</label>
-        <input type="text" v-model="userName" class="form-control9" required placeholder="请输入姓名" />
+        <label for>姓名</label>
+        <span class="red-star">*</span>
+        <input type="text" v-model="user.name" class="form-control9" required placeholder="请输入姓名" />
       </div>
       <div class="input-item">
-        <label for>年龄</label>
-        <input type="text" v-model="age" class="form-control9" required placeholder="请输入年龄" />
+        <label for>性别</label>
+        <span class="red-star">*</span>
+        <!-- <input type="text" v-model="sex" class="form-control9" required placeholder="请输入性别" /> -->
+        <select v-model="user.sex">
+          <option>男</option>
+          <option>女</option>
+        </select>
+      </div>
+      <div class="input-item">
+        <label for>手机</label>
+        <span class="red-star">*</span>
+        <input type="text" v-model="user.mobile" class="form-control9" required placeholder="请输入手机" />
+      </div>
+      <div class="input-item">
+        <label for>密码</label>
+        <span class="red-star">*</span>
+        <input type="text" v-model="user.password" class="form-control9" required placeholder="请输入密码" />
       </div>
 
       <div class="btn">
@@ -28,14 +44,16 @@
         <thead>
           <tr>
             <th>姓名</th>
-            <th>年龄</th>
+            <th>性别</th>
+            <th>手机</th>
             <!-- <th>备注</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users">
-            <td>{{user.name}}</td>
-            <td>{{user.age}}</td>
+          <tr v-for="item in users">
+            <td>{{item.name}}</td>
+            <td>{{item.sex}}</td>
+            <td>{{item.mobile}}</td>
             <td></td>
           </tr>
         </tbody>
@@ -51,41 +69,45 @@ export default {
   name: "add-user",
   data() {
     return {
-      userName: "",
-      age: "",
+      user: {
+        name: "",
+        sex: "",
+        mobile: "",
+        password: ""
+      },
       submited: false,
-      message: "",
-      users: [],
+      messsex: "",
+      users: []
     };
   },
   methods: {
     addUser() {
-      var name = this.userName;
-      var age = this.age;
-      console.log(name + ":" + age);
+      let userdata = {
+        name: this.user.name,
+        sex: this.user.sex,
+        mobile: this.user.mobile,
+        password: this.user.password
+      };
+
+      // console.log(name + ":" + sex);
       this.$http
         //这里的 addUser 是路由，传送到 userApi.js 接口，以下的 searchUser 和 editUser 类似
-        .post(
-          "/api/user/addUser",
-          {
-            name: name,
-            age: age
-          },
-          {}
-        )
+        .post("/api/user/addUser", userdata, {})
         .then(response => {
           console.log("成功提示：", response);
-          this.message = this.userName + ":" + this.age;
-          this.userName = "";
-          this.age = "";
+          // this.message = this.name + ":" + this.sex;
+          // this.name = "";
+          // this.sex = "";
+          // this.mobile = "";
+          // this.password = "";
+          this.user={}
         });
     },
 
     //查询用户 荣 on 2020.2.22
     searchUser() {
-      var name = this.userName;
-      var age = this.age;
-      // console.log(name + ":" + age);
+      let name = this.user.name;
+      // console.log(name + ":" + sex);
       // GET传参数查看如下网址（搞了我几天终于搞掂）2020.2.27
       //  https://blog.csdn.net/u010942058/article/details/101670400
       //  https://blog.csdn.net/qq_36947128/article/details/79743827
@@ -100,7 +122,7 @@ export default {
 
     //删除用户 荣 on 2020.2.27
     deleteUser() {
-      var name = this.userName;
+      let name = this.user.name;
       console.log(name);
       this.$http
         .delete("/api/user/deleteUser", { body: { name: name } })
@@ -111,25 +133,26 @@ export default {
 
     //更新用户 荣 on 2020.2.27
     editUser() {
-      var name = this.userName;
-      var age = this.age;
-      var putData = {
+      let putData = {
         //查询SQL语句有多少个参数就设多少个属性(键对)
-        name: this.userName, //待更新的用户名
-        age: this.age, //待更新的用年龄
-        name: this.userName //更新条件(以用户名为更新条件)
+        name: this.user.name, //待更新的用户名
+        sex: this.user.sex, //待更新的用年龄
+        name: this.user.name, //更新条件(以用户名为更新条件)
+        mobile: this.user.mobile,
+        password:this.user.password
       };
-      console.log(name + ":" + age);
       // GET传参数查看如下网址（搞了我几天终于搞掂）2020.2.27
       //  https://blog.csdn.net/u010942058/article/details/101670400
       this.$http
-        // 对应sqlMap.js的点位符参数   ?:name  ?:age    ?:条件name
-        // .put("/api/user/editUser",{name:name,age:age,name:name} )
+        // 对应sqlMap.js的点位符参数   ?:name  ?:sex    ?:条件name
+        // .put("/api/user/editUser",{name:name,sex:sex,name:name} )
         .put("/api/user/editUser", putData)
         .then(response => {
           console.log("荣提示：这是PUT ", response);
           console.log("荣query:", response.query);
-          this.users = [{ name: this.userName, age: this.age }];
+          // this.users = [
+          //   { name: this.name, sex: this.sex, mobile: this.mobile }
+          // ];
         });
     }
   }
@@ -146,7 +169,8 @@ export default {
   max-width: 600px;
   padding: 20px;
 }
-input[type="text"] {
+input[type="text"],
+select {
   height: 35px;
   width: 100%;
   margin: 10px 10px 10px 10px;
@@ -184,12 +208,15 @@ label {
   /* padding:5px 0 5px; */
   line-height: 20px;
   /* background-color: rgb(168, 143, 143); */
-  width:100px;
+  width: 100px;
 }
 
-.input-item{
+.input-item {
   display: flex;
-  flex:1;
-  align-items:baseline;
+  flex: 1;
+  align-items: baseline;
+}
+.red-star {
+  color: red;
 }
 </style>

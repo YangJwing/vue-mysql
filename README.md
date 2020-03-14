@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-18 13:38:59
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-13 17:04:58
+ * @LastEditTime: 2020-03-14 10:52:37
  * @描述: 
  -->
 ## 第一次用 Git 代码 托管
@@ -82,5 +82,17 @@ var sqlMap={
     },
 }
 ```  
+## 二.知识点
+ ##### 1. < roter-link > 的点击要在 @click后加native,即 @click.native
+ 
+ ##### 2. 客户端存储(LocalStorage 和 sessionStorage)
+ - 区别在于存储的有效期和作用域的不同:数据可以存储多长时间及谁拥有数据的访问权
+ - window.localStorage.setItem('token', data)
+ - window.localStorage.getItem('token')
+ - window.localStorage.removeItem('token')
+
+
+
+
 
 

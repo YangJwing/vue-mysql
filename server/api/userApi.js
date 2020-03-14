@@ -28,7 +28,7 @@ router.post('/addUser', (req, res) => {
   var params = req.body;
   console.log("params:", params);
   // function(err,result) 相当于 (err,result)=>
-  conn.query(sql, [params.name, params.age], (err, result) => {
+  conn.query(sql, [params.name, params.sex,params.mobile,params.password], (err, result) => {
     if (err) {
       console.log("荣提示：" + err);
     }
@@ -45,7 +45,7 @@ router.post('/logincheck',(req,res)=>{
   var params=req.body
   console.log('sql :', sql);
   console.log('params :', params);
-  conn.query(sql, [params.mobile, params.password], (err, result) => {
+  conn.query(sql, [params.mobile, params.password,params.state], (err, result) => {
     if (err) {
       console.log("提示：" + err);
     }
@@ -53,7 +53,25 @@ router.post('/logincheck',(req,res)=>{
       // res.json({status:1,msg:"登录成功"})
       jsonWrite(res, result);  //检测密码不用返回数据记录吧,返回结果就可以
     } else {
-      res.json({status:1,msg:"登录失败"})
+      res.json({status:1,name:'未知用户名',msg:"用户名或密码错误"})  //用户名或密码错误,返回信息
+    }
+  })
+})
+
+//登录日志
+router.post('/loginlog',(req,res)=>{
+  var sql=$sql.login.loginlog
+  var params=req.body
+  console.log('sql :', sql);
+  console.log('params :', params);
+  conn.query(sql, [params.name, params.mobile,params.state], (err, result) => {
+    if (err) {
+      console.log("提示：" + err);
+    }
+    if (result.length) {
+      jsonWrite(res, result);  //
+    } else {
+      res.json({status:1,msg:"写入失败"})  //
     }
   })
 })
@@ -79,7 +97,7 @@ router.put('/editUser', (req, res) => {
   var sql = $sql.user.edit;
   var params = req.body;
   console.log(params);
-  conn.query(sql, [params.name, params.age, params.name], function (err, result) {
+  conn.query(sql, [params.name, params.sex, params.name], function (err, result) {
     if (err) {
       console.log("荣提示：" + err);
     }
