@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-02-14 23:16:25
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 02:10:45
+ * @LastEditTime: 2020-03-15 11:45:57
  * @描述: 
  -->
 <template>
@@ -79,7 +79,7 @@ export default {
   background-color: #eee;
 }
 .nav-right {
-  background-color: #eee;
+  /* background-color: #eee; */
   margin-right: 10px;
 }
 .nav-left-item {

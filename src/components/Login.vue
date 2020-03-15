@@ -2,7 +2,7 @@
  * @作者: Edwin Yeung
  * @Date: 2020-03-12 00:23:30
  * @修改人: Edwin Yeung
- * @LastEditTime: 2020-03-15 03:13:46
+ * @LastEditTime: 2020-03-15 11:45:08
  * @描述: https://segmentfault.com/a/1190000015201803
  *        https://github.com/doterlin/vue-example-login
  *        https://blog.csdn.net/weixin_41105030/article/details/89333208  
@@ -123,8 +123,9 @@ h4.title {
 }
 .login-form {
   width: 300px;
-  height: 300px;
-  background-color: rgb(245, 245, 245);
+  height: 200px;
+  /* background-color: rgb(245, 245, 245); */
+  border:1px solid rgba(240, 240, 240, 1);
   padding: 30px;
 }
 
